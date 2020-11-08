@@ -36,3 +36,13 @@
 .cdk-drag-animating {
   transition: transform 250ms;
 }
+
+.empty-label {
+  text-align: center;
+  font-size: 24px;
+  color: #ccc;
+}
+
+.mat-card-subtitle {
+  margin-left: 10px;
+}

@@ -11,45 +11,70 @@
     <input matInput (keydown.enter)="addItem($event)">
   </mat-form-field>
   <div class="container-wrapper">
-    <mat-card #todoList="cdkDropList"
+    <mat-card
               cdkDropList
+              id="todo"
+              #todoList="cdkDropList"
+              [cdkDropListData]="todo | async"
+              [cdkDropListConnectedTo]="[inProgressList, doneList]"
               (cdkDropListDropped)="drop($event)"
-              [cdkDropListData]="todo"
               class="list"
-              [cdkDropListConnectedTo]="[inProgressList, doneList]">
+    >
       <mat-card-title>
         Todo
       </mat-card-title>
       <div class="item-wrapper">
-        <mat-card cdkDrag class="item" *ngFor="let item of todo">{{item}}</mat-card>
+        <p class="empty-label" *ngIf="(todo | async)?.length === 0">Empty list</p>
+        <mat-card cdkDrag class="item" *ngFor="let item of todo | async">
+          <mat-card-content>
+            <p>{{item.title}}</p>
+            <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
       </div>
     </mat-card>
 
-    <mat-card #inProgressList="cdkDropList"
+    <mat-card
+              #inProgressList="cdkDropList"
+              id="inProgress"
               cdkDropList
               (cdkDropListDropped)="drop($event)"
-              [cdkDropListData]="inProgress"
+              [cdkDropListData]="inProgress | async"
               class="list"
-              [cdkDropListConnectedTo]="[todoList, doneList]">
+              [cdkDropListConnectedTo]="[todoList, doneList]"
+      >
       <mat-card-title>
         In Progress
       </mat-card-title>
       <div class="item-wrapper">
-        <mat-card cdkDrag class="item" *ngFor="let item of inProgress">{{item}}</mat-card>
+        <p class="empty-label" *ngIf="(inProgress | async)?.length === 0">Empty list</p>
+        <mat-card cdkDrag class="item" *ngFor="let item of inProgress | async">
+          <mat-card-content>
+            <p>{{item.title}}</p>
+            <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
       </div>
     </mat-card>
 
     <mat-card #doneList="cdkDropList"
+              id="done"
               cdkDropList
               (cdkDropListDropped)="drop($event)"
-              [cdkDropListData]="done"
+              [cdkDropListData]="done | async"
               class="list"
               [cdkDropListConnectedTo]="[todoList, inProgressList]">
       <mat-card-title>
         Done
       </mat-card-title>
       <div class="item-wrapper">
-        <mat-card cdkDrag class="item" *ngFor="let item of done">{{item}}</mat-card>
+        <p class="empty-label" *ngIf="(done | async)?.length === 0">Empty list</p>
+        <mat-card cdkDrag class="item" *ngFor="let item of done | async">
+          <mat-card-content>
+            <p>{{item.title}}</p>
+            <mat-card-subtitle>{{item.description}}</mat-card-subtitle>
+          </mat-card-content>
+        </mat-card>
       </div>
     </mat-card>
   </div>
