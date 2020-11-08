@@ -1,4 +1,56 @@
-<mat-toolbar>
+<mat-toolbar color="primary">
   <mat-icon>local_fire_department</mat-icon>
-  <span>KanbanFire</span>
+  <div class="content">
+    <span>kanban-fire app is running!</span>
+  </div>
 </mat-toolbar>
+
+<div class="content-wrapper">
+  <mat-form-field>
+    <mat-label>Task name</mat-label>
+    <input matInput (keydown.enter)="addItem($event)">
+  </mat-form-field>
+  <div class="container-wrapper">
+    <mat-card #todoList="cdkDropList"
+              cdkDropList
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListData]="todo"
+              class="list"
+              [cdkDropListConnectedTo]="[inProgressList, doneList]">
+      <mat-card-title>
+        Todo
+      </mat-card-title>
+      <div class="item-wrapper">
+        <mat-card cdkDrag class="item" *ngFor="let item of todo">{{item}}</mat-card>
+      </div>
+    </mat-card>
+
+    <mat-card #inProgressList="cdkDropList"
+              cdkDropList
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListData]="inProgress"
+              class="list"
+              [cdkDropListConnectedTo]="[todoList, doneList]">
+      <mat-card-title>
+        In Progress
+      </mat-card-title>
+      <div class="item-wrapper">
+        <mat-card cdkDrag class="item" *ngFor="let item of inProgress">{{item}}</mat-card>
+      </div>
+    </mat-card>
+
+    <mat-card #doneList="cdkDropList"
+              cdkDropList
+              (cdkDropListDropped)="drop($event)"
+              [cdkDropListData]="done"
+              class="list"
+              [cdkDropListConnectedTo]="[todoList, inProgressList]">
+      <mat-card-title>
+        Done
+      </mat-card-title>
+      <div class="item-wrapper">
+        <mat-card cdkDrag class="item" *ngFor="let item of done">{{item}}</mat-card>
+      </div>
+    </mat-card>
+  </div>
+</div>
