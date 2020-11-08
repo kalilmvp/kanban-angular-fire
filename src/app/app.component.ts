@@ -40,7 +40,6 @@ export class AppComponent {
 
   addItem(event: KeyboardEvent) {
     const input = event.target as HTMLInputElement;
-    // this.todo.push(input.value);
 
     this.store.collection<Task>('todo').add({
       title: input.value,
